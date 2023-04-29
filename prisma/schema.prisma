@@ -1,6 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// "model"=> palavra reservado para criacao de uma tabela
 generator client {
   provider = "prisma-client-js"
 }

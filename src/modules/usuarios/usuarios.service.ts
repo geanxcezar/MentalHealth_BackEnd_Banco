@@ -1,0 +1,34 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/database/PrismaService';
+import { UsuariosDTO } from './usuarios.dto';
+
+@Injectable()
+export class UsuariosService {
+
+    constructor(private prisma: PrismaService) {}
+
+    async creat(data: UsuariosDTO) {
+        const usuariosExists = await this.prisma.usuarios.findFirst({
+            where:{
+                email: data.email
+            }
+        })
+        if (usuariosExists){
+            throw new Error("Email ja cadastrado!")
+        } 
+
+        const usuarios = await this.prisma.usuarios.create({
+            data,
+        });
+
+    return usuarios;
+    }
+    findAll() {
+        return this.prisma.usuarios.findMany({
+          orderBy: [{
+            nome: 'asc',
+          }]
+
+        })
+      }
+}
