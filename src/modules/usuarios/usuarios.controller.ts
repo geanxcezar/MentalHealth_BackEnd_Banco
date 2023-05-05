@@ -4,13 +4,13 @@ import { UsuariosDTO } from './usuarios.dto';
 
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService) {}
+  constructor(private readonly usuariosService: UsuariosService) { }
 
   @Post()
-  async create(@Body() data: UsuariosDTO){
-    return this.usuariosService.creat(data);
+  async create(@Body() data: UsuariosDTO) {
+    return this.usuariosService.create(data);
   }
-  
+
   @Get()
   findAll() {
     return this.usuariosService.findAll();

@@ -10,36 +10,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//Criando as tabelas do banco 
+//Criando as tabelas do banco (Usuarios
 model Usuarios {
-  id    Int     @default(autoincrement()) @id
-  nome  String
-  email String  @unique  
-  senha String
-  colaboradores Colaboradores[]
+  id           Int      @id @default(autoincrement())
+  address      String
+  avatarUrl    String
+  createdAt    DateTime @default(now())
+  email        String
+  name         String
+  phone        String
+  management   String
+  sectionsWeek String
+  bloqueado    Boolean  @default(false)
 }
 
+//Criando as tabelas do banco (Psicologos
 model Psicologos {
-  id        Int      @default(autoincrement()) @id
-  nome      String
-  registro_profissional   String?
-  email     String?
-  telefone  String?
-  endereco  String?
-  descricao String?
-  data_cadastro DateTime @default(now())
-  bloqueado Boolean? @default(false) 
-}
-
-model Colaboradores {
-  id           Int      @default(autoincrement()) @id
-  nome         String  
-  usuario      Usuarios?  @relation(fields: [usuarioId], references: [id])
-  usuarioId    Int?
-  departamento String?
-  cargo        String?
-  endereco     String?
-  salraio      Float?  
-  data_contratacao DateTime?
-  bloqueado    Boolean? @default(false)    
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  description  String
+  media        String
+  title        String
+  totalReviews String
+  notaEstrelas String
+  bloqueado    Boolean  @default(false)
 }

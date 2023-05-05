@@ -1,6 +1,12 @@
-export type UsuariosDTO ={
+export type UsuariosDTO = {
     id: number;
-    nome: string;
+    address: string;
+    avatarUrl: string;
+    createdAt: Date;
     email: string;
-    senha: string;
+    name: string;
+    phone: string;
+    management: string;
+    sectionsWeek: string;
+    bloqueado: boolean;
 }
