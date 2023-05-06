@@ -12,26 +12,40 @@ datasource db {
 
 //Criando as tabelas do banco (Usuarios
 model Usuarios {
-  id           Int      @id @default(autoincrement())
+  id           Int            @id @default(autoincrement())
   address      String
   avatarUrl    String
-  createdAt    DateTime @default(now())
+  createdAt    DateTime       @default(now())
   email        String
   name         String
   phone        String
   management   String
   sectionsWeek String
-  bloqueado    Boolean  @default(false)
+  bloqueado    Boolean        @default(false)
+  agendamentos Agendamentos[]
 }
 
 //Criando as tabelas do banco (Psicologos
 model Psicologos {
-  id           Int      @id @default(autoincrement())
-  createdAt    DateTime @default(now())
+  id           Int            @id @default(autoincrement())
+  createdAt    DateTime       @default(now())
   description  String
   media        String
   title        String
   totalReviews String
   notaEstrelas String
-  bloqueado    Boolean  @default(false)
+  bloqueado    Boolean        @default(false)
+  agendamentos Agendamentos[]
+}
+
+//Criando a tabela do banco "Agendamentos"
+model Agendamentos {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  dataConsulta DateTime
+  duracao      Int
+  psicologo    Psicologos @relation(fields: [psicologoId], references: [id])
+  psicologoId  Int
+  usuario      Usuarios   @relation(fields: [usuarioId], references: [id])
+  usuarioId    Int
 }
