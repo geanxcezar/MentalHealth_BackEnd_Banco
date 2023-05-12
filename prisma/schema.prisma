@@ -13,14 +13,15 @@ datasource db {
 //Criando as tabelas do banco (Usuarios
 model Usuarios {
   id           Int            @id @default(autoincrement())
+  name         String
   address      String
+  management   String
+  phone        String
+  sectionsWeek String
+  email        String
+  password     String
   avatarUrl    String
   createdAt    DateTime       @default(now())
-  email        String
-  name         String
-  phone        String
-  management   String
-  sectionsWeek String
   bloqueado    Boolean        @default(false)
   agendamentos Agendamentos[]
 }
@@ -28,12 +29,12 @@ model Usuarios {
 //Criando as tabelas do banco (Psicologos
 model Psicologos {
   id           Int            @id @default(autoincrement())
-  createdAt    DateTime       @default(now())
   description  String
   media        String
   title        String
   totalReviews String
   notaEstrelas String
+  createdAt    DateTime       @default(now())
   bloqueado    Boolean        @default(false)
   agendamentos Agendamentos[]
 }
@@ -49,3 +50,41 @@ model Agendamentos {
   usuario      Usuarios   @relation(fields: [usuarioId], references: [id])
   usuarioId    Int
 }
+
+//modelos novo ################################# //
+// Tabela Usuários para acesso ao sistema
+model Usuario {
+  id Int @id @default(autoincrement())
+  email String 
+  senha String
+  pacientes Paciente[]
+  psicologos Psicologo[]
+}
+
+// Tabela Psicólogos relacionando com usuários
+model Psicologo {
+  id Int @id @default(autoincrement())
+  nome String
+  crp String
+  usuarios  Usuario[]
+  agendamentos Agendamento[]
+}
+
+// Tabela Pacientes relacionando com usuários
+model Paciente {
+  id Int @id @default(autoincrement())
+  nome String
+  usuario Usuario[]
+  agendamentos Agendamento[]
+}
+
+// Tabela Agendamentos relacionando com Psicólogos com Pacientes
+model Agendamento {
+  id Int @id @default(autoincrement())
+  data DateTime
+  psicologo    Psicologo @relation(fields: [psicologoId], references: [id])
+  psicologoId  Int
+  paciente     Paciente   @relation(fields: [pacienteId], references: [id])
+  pacienteId    Int
+}
+

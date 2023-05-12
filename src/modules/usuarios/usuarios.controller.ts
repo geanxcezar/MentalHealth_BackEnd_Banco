@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { UsuariosDTO } from './usuarios.dto';
 
@@ -15,4 +15,15 @@ export class UsuariosController {
   findAll() {
     return this.usuariosService.findAll();
   }
+
+  @Put(":id")
+  async update(@Param('id') id: number, @Body() data: UsuariosDTO) {
+    return this.usuariosService.update(id, data);
+  }
+
+  @Delete(":id")
+  async Delete(@Param('id') id: number) {
+    return this.usuariosService.delete(id);
+  }
+
 }
