@@ -9,17 +9,12 @@ export class UsuariosService {
 
     //METODO PARA CRIAR UM USUARIO
     async create(data: UsuariosDTO) {
-        const usuariosExists = await this.prisma.usuarios.findFirst({
-            where: {
-                email: data.email
-            }
-        })
-        if (usuariosExists) {
-            throw new Error("Email ja cadastrado!")
-        }
-
+        let { email, senha } = data
         const usuarios = await this.prisma.usuarios.create({
-            data,
+            data: {
+                email,
+                senha
+            }
         });
 
         return usuarios;
@@ -27,7 +22,7 @@ export class UsuariosService {
     findAll() {
         return this.prisma.usuarios.findMany({
             orderBy: [{
-                name: 'asc',
+                email: 'asc',
             }]
 
         })
@@ -35,40 +30,20 @@ export class UsuariosService {
 
     //METODO PARA ALTERAR UM USUARIO COM PASSAGEM DE PARAMETRO
     async update(id: number, data: UsuariosDTO) {
-        const usuariosExists = await this.prisma.usuarios.findFirst({
-            where: {
-                id,
-            },
-        });
-
-        if (!usuariosExists) {
-            throw new Error("Usuario nao cadastrado!")
-        }
-
-        return await this.prisma.usuarios.update({
-            data,
-            where: {
-                id,
-            },
-        });
+        return this.prisma.usuarios.update({
+                where: {
+                     id: id 
+                },
+             data: data
+            })
     }
     //METODO PARA DELETAR UM USUARIO
     async delete(id: number) {
-        const usuariosExists = await this.prisma.usuarios.findFirst({
+        return await this.prisma.usuarios.delete({
             where: {
                 id,
             },
         });
-
-        if (!usuariosExists) {
-            throw new Error("Usuario nao cadastrado!")
-        }
-
-        return await this.prisma.usuarios.delete({            
-            where: {
-                id,
-            },
-        });        
     }
 
 }

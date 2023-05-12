@@ -10,81 +10,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//Criando as tabelas do banco (Usuarios
+//modelos novo ################################# //
+// Tabela Usuários para acesso ao sistema
 model Usuarios {
-  id           Int            @id @default(autoincrement())
-  name         String
-  address      String
-  management   String
-  phone        String
-  sectionsWeek String
-  email        String
-  password     String
-  avatarUrl    String
-  createdAt    DateTime       @default(now())
-  bloqueado    Boolean        @default(false)
-  agendamentos Agendamentos[]
+  id         Int         @id @default(autoincrement())
+  email      String
+  senha      String
+  pacientes  Pacientes[]
+  psicologos Psicologos[]
 }
 
-//Criando as tabelas do banco (Psicologos
+// Tabela Psicólogos relacionando com usuários
 model Psicologos {
-  id           Int            @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
+  nome         String
+  crp          String
   description  String
   media        String
   title        String
   totalReviews String
   notaEstrelas String
-  createdAt    DateTime       @default(now())
-  bloqueado    Boolean        @default(false)
+  createdAt    DateTime      @default(now())
+  bloqueado    Boolean       @default(false)
+  usuarios     Usuarios[]
   agendamentos Agendamentos[]
 }
 
-//Criando a tabela do banco "Agendamentos"
-model Agendamentos {
-  id           Int        @id @default(autoincrement())
-  createdAt    DateTime   @default(now())
-  dataConsulta DateTime
-  duracao      Int
-  psicologo    Psicologos @relation(fields: [psicologoId], references: [id])
-  psicologoId  Int
-  usuario      Usuarios   @relation(fields: [usuarioId], references: [id])
-  usuarioId    Int
-}
-
-//modelos novo ################################# //
-// Tabela Usuários para acesso ao sistema
-model Usuario {
-  id Int @id @default(autoincrement())
-  email String 
-  senha String
-  pacientes Paciente[]
-  psicologos Psicologo[]
-}
-
-// Tabela Psicólogos relacionando com usuários
-model Psicologo {
-  id Int @id @default(autoincrement())
-  nome String
-  crp String
-  usuarios  Usuario[]
-  agendamentos Agendamento[]
-}
-
 // Tabela Pacientes relacionando com usuários
-model Paciente {
-  id Int @id @default(autoincrement())
-  nome String
-  usuario Usuario[]
-  agendamentos Agendamento[]
+model Pacientes {
+  id           Int           @id @default(autoincrement())
+  name         String
+  address      String
+  management   String
+  phone        String
+  sectionsWeek String
+  avatarUrl    String
+  createdAt    DateTime      @default(now())
+  bloqueado    Boolean       @default(false)
+  usuario      Usuarios[]
+  agendamentos Agendamentos[]
 }
 
 // Tabela Agendamentos relacionando com Psicólogos com Pacientes
-model Agendamento {
-  id Int @id @default(autoincrement())
-  data DateTime
-  psicologo    Psicologo @relation(fields: [psicologoId], references: [id])
-  psicologoId  Int
-  paciente     Paciente   @relation(fields: [pacienteId], references: [id])
-  pacienteId    Int
+model Agendamentos {
+  id          Int       @id @default(autoincrement())
+  dataagenda  DateTime
+  horaagenda  DateTime
+  psicologo   Psicologos @relation(fields: [psicologoId], references: [id])
+  psicologoId Int
+  paciente    Pacientes  @relation(fields: [pacienteId], references: [id])
+  pacienteId  Int
 }
-
