@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { PsicologosService } from './psicologos.service';
 import { PsicologosDTO } from './psicologos.dto';
 
-@Controller('usuarios')
+@Controller('psicologos')
 export class PsicologosController {
   constructor(private readonly psicologosService: PsicologosService) { }
 
