@@ -40,11 +40,11 @@ model Psicologos {
 model Pacientes {
   id           Int           @id @default(autoincrement())
   name         String
-  address      String
-  management   String
-  phone        String
-  sectionsWeek String
-  avatarUrl    String
+  address      String?
+  management   String?
+  phone        String?
+  sectionsWeek String?
+  avatarUrl    String?
   createdAt    DateTime      @default(now())
   bloqueado    Boolean       @default(false)
   usuario      Usuarios[]
@@ -61,3 +61,4 @@ model Agendamentos {
   paciente    Pacientes  @relation(fields: [pacienteId], references: [id])
   pacienteId  Int
 }
+          
